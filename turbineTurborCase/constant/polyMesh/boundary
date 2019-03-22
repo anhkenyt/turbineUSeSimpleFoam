@@ -1,0 +1,136 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      binary;
+    class       polyBoundaryMesh;
+    location    "constant/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+12
+(
+    outlet
+    {
+        type            patch;
+        nFaces          6360;
+        startFace       4074577;
+    }
+    movingWalls
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          40680;
+        startFace       4080937;
+    }
+    rotorBlade
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          33231;
+        startFace       4121617;
+    }
+    statorBlade
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          6976;
+        startFace       4154848;
+    }
+    inlet
+    {
+        type            patch;
+        nFaces          1280;
+        startFace       4161824;
+    }
+    stationaryWalls
+    {
+        type            wall;
+        inGroups        1(wall);
+        nFaces          18920;
+        startFace       4163104;
+    }
+    cyclicRepeatAMIInterface1
+    {
+        type            cyclicRepeatAMI;
+        inGroups        1(RepeatAMI1);
+        nFaces          1792;
+        startFace       4182024;
+        inGroups        1 ( RepeatAMI1 );
+        name            cyclicRepeatAMIInterface1;
+        neighbourPatch  cyclicRepeatAMIInterface2;
+        transformPatch  cyclic_Out1;
+    }
+    cyclicRepeatAMIInterface2
+    {
+        type            cyclicRepeatAMI;
+        inGroups        1(RepeatAMI2);
+        nFaces          5565;
+        startFace       4183816;
+        inGroups        1 ( RepeatAMI2 );
+        name            cyclicRepeatAMIInterface2;
+        neighbourPatch  cyclicRepeatAMIInterface1;
+        transformPatch  cyclic_Out1;
+    }
+    cyclic_In1
+    {
+        type            cyclicAMI;
+        inGroups        1(cyclicAMI);
+        nFaces          3616;
+        startFace       4189381;
+        matchTolerance  0.0001;
+        transform       rotational;
+        neighbourPatch  cyclic_In2;
+        rotationAxis    (0 0 1);
+        rotationCentre  (0 0 0);
+        rotationAngle   18;
+    }
+    cyclic_In2
+    {
+        type            cyclicAMI;
+        inGroups        1(cyclicAMI);
+        nFaces          3616;
+        startFace       4192997;
+        matchTolerance  0.0001;
+        transform       rotational;
+        neighbourPatch  cyclic_In1;
+        rotationAxis    (0 0 1);
+        rotationCentre  (0 0 0);
+        rotationAngle   18;
+    }
+    cyclic_Out1
+    {
+        type            cyclicAMI;
+        inGroups        1(cyclicAMI);
+        nFaces          6625;
+        startFace       4196613;
+        matchTolerance  0.0001;
+        transform       rotational;
+        neighbourPatch  cyclic_Out2;
+        rotationAxis    (0 0 1);
+        rotationCentre  (0 0 0);
+        rotationAngle   18;
+    }
+    cyclic_Out2
+    {
+        type            cyclicAMI;
+        inGroups        1(cyclicAMI);
+        nFaces          6625;
+        startFace       4203238;
+        matchTolerance  0.0001;
+        transform       rotational;
+        neighbourPatch  cyclic_Out1;
+        rotationAxis    (0 0 1);
+        rotationCentre  (0 0 0);
+        rotationAngle   18;
+    }
+)
+
+// ************************************************************************* //

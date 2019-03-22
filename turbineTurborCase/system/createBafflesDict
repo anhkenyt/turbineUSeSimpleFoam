@@ -1,0 +1,242 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      createBafflesDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Whether to convert internal faces only (so leave boundary faces intact).
+// This is only relevant if your face selection type can pick up boundary
+// faces.
+internalFacesOnly false;
+
+
+// Baffles to create.
+baffles
+{
+    RepeatAMI1
+    {
+        //- Use predefined faceZone to select faces and orientation.
+        type        faceZone;
+        zoneName    couple1Faces;
+
+        patches
+        {
+            master
+            {
+                //- Master side patch
+                name            cyclicRepeatAMIInterface1;
+                type            cyclicRepeatAMI;
+                neighbourPatch  cyclicRepeatAMIInterface2;
+                transformPatch  cyclicOut1ACMI_Out1;               
+            }
+            slave
+            {
+                name            cyclicRepeatAMIInterface1;
+                type            patch;               
+            }
+        }
+    }
+
+    RepeatAMI2
+    {
+        //- Use predefined faceZone to select faces and orientation.
+        type        faceZone;
+        zoneName    couple2Faces;
+
+        patches
+        {
+            master
+            {
+                //- Master side patch
+                name            cyclicRepeatAMIInterface2;
+                type            cyclicRepeatAMI;
+                neighbourPatch  cyclicRepeatAMIInterface1;
+                transformPatch  cyclicOut1ACMI_Out1;              
+            }
+            slave
+            {
+                name            cyclicRepeatAMIInterface2;
+                type            patch;
+            }
+        }
+    }
+    //
+/*
+    ACMI1
+    {
+        //- Use predefined faceZone to select faces and orientation.
+        type        faceZone;
+        zoneName    cyclicIn1Faces;
+
+        patches
+        {
+            master
+            {
+                //- Master side patch
+                name            ACMI1_cyclicIn1;
+                type            cyclicACMI;
+                matchTolerance  0.0001;
+                neighbourPatch  ACMI2_cyclicIn2;
+                nonOverlapPatch ACMI1_blockage;
+                transform       noOrdering;
+            }
+            slave // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI1_cyclicIn1;
+                type            patch;
+            }
+
+            master2
+            {
+                //- Master side patch
+                name            ACMI1_blockage;
+                type            wall;
+            }
+            slave2 // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI1_blockage;
+                type            wall;
+            }
+
+        }
+    }
+    //
+    ACMI2
+    {
+        //- Use predefined faceZone to select faces and orientation.
+        type        faceZone;
+        zoneName    cyclicIn2Faces;
+
+        patches
+        {
+            master
+            {
+                //- Master side patch
+                name            ACMI2_cyclicIn2;
+                type            cyclicACMI;
+                matchTolerance  0.0001;
+                neighbourPatch  ACMI2_cyclicIn1;
+                nonOverlapPatch ACMI1_blockage;
+                transform       noOrdering;
+            }
+            slave // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI2_cyclicIn2;
+                type            patch;
+            }
+
+            master2
+            {
+                //- Master side patch
+                name            ACMI2_blockage;
+                type            wall;
+            }
+            slave2 // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI2_blockage;
+                type            wall;
+            }
+
+        }
+    }
+//
+ACMI3
+    {
+        //- Use predefined faceZone to select faces and orientation.
+        type        faceZone;
+        zoneName    cyclicOut2Faces;
+
+        patches
+        {
+            master
+            {
+                //- Master side patch
+                name            ACMI3_cyclicOut2;
+                type            cyclicACMI;
+                matchTolerance  0.0001;
+                neighbourPatch  ACMI4_cyclicOut1;
+                nonOverlapPatch ACMI3_blockage;
+                transform       noOrdering;
+            }
+            slave // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI3_cyclicOut2;
+                type            patch;
+            }
+
+            master2
+            {
+                //- Master side patch
+                name            ACMI3_blockage;
+                type            wall;
+            }
+            slave2 // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI3_blockage;
+                type            wall;
+            }
+
+        }
+    }
+//
+ACMI4
+    {
+        //- Use predefined faceZone to select faces and orientation.
+        type        faceZone;
+        zoneName    cyclicOut2Faces;
+
+        patches
+        {
+            master
+            {
+                //- Master side patch
+                name            ACMI4_cyclicOut1;
+                type            cyclicACMI;
+                matchTolerance  0.0001;
+                neighbourPatch  ACMI3_cyclicOut2;
+                nonOverlapPatch ACMI4_blockage;
+                transform       noOrdering;
+            }
+            slave // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI4_cyclicOut1;
+                type            patch;
+            }
+
+            master2
+            {
+                //- Master side patch
+                name            ACMI4_blockage;
+                type            wall;
+            }
+            slave2 // not used since we're manipulating a boundary patch
+            {
+                //- Slave side patch
+                name            ACMI4_blockage;
+                type            wall;
+            }
+
+        }
+    }
+*/
+}
+
+
+// ************************************************************************* //
